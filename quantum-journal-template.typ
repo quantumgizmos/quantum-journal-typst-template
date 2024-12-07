@@ -12,7 +12,8 @@
     font-size: 11pt,                // Default font size
     columns: 2,                     // Number of columns in the document
     font: "New Computer Modern",    // Default font
-    title_url: none,                // The link when you click on the title 
+    title_url: none, // The link when you click on the title
+    bibliography: bibliography("refs.bib"),
     doc                             // Document content
 ) = {
 
@@ -35,7 +36,6 @@
   // Set the heading numbering and style
   set heading(numbering: "1.")
   show heading: text.with(font: "New Computer Modern Sans", weight: "regular", size: 1.0em)
-  show heading.where(body: [References]): set heading(numbering: none)
   show heading.where(body: [Acknowledgements]): set heading(numbering: none)
 
   // Set the default text size and font, ensuring consistency
@@ -46,6 +46,18 @@
   }
   set text(size: font-size, font: font)
 
+  //Figure formatting
+ 
+  show figure.where(kind: image): set figure(supplement: [Fig], numbering: "1") 
+  show figure.caption: set text(size: font-size)
+  show figure.caption: set align(start)
+  
+
+  
+  // Style bibliography.
+  set std.bibliography(title: text(font-size)[= References], style: "ieee")
+
+  
   // Place the title and author block at the top left of the page
   place(
     top + left,
