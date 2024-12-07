@@ -5,26 +5,10 @@
 #let quantum_violet = rgb("#53257F")
 #let quantum_grey = rgb("#555555")
 
-// Define a macro for the abstract section, setting the text in bold
-#let Abstract(body) = {
-  set text(weight: "bold")
-  body
-}
-
-// Define a macro for the appendix section, adding specific heading numbering styles
-#let Appendix(body) = {
-  show: set heading(numbering: "A")
-  show heading.where(level: 2): set heading(numbering: "A1")
-  counter(heading).update(0)
-  [= Appendix]
-  body
-}
-
 // Define the main template function 'quantum-journal-template'
 #let quantum-journal-template(
     title: none,                    // Title of the document
-    authors: (name: none, affiliations: ()),  // Authors list with their affiliations
-    url: none,                      // Optional URL link for reference
+    authors: (),  // Authors. Each entry is a dictionary. Optional keys are "name", "affiliations", "homepage", and "email"
     font-size: 11pt,                // Default font size
     columns: 2,                     // Number of columns in the document
     font: "New Computer Modern",    // Default font
@@ -32,7 +16,7 @@
     doc                             // Document content
 ) = {
 
-  // Set the document title and author(s)
+  // Set the document meta data
   set document(title: title, author: authors.map(author => author.name))
 
   // Configure page settings: margins, columns, and page numbering
@@ -41,6 +25,12 @@
     columns: columns,
     numbering: "1"
   )
+
+  // Set paragraph justification for the document
+  set par(justify: true)
+  
+  // Set equation numbering style
+  set math.equation(numbering: "(1)")
 
   // Set the heading numbering and style
   set heading(numbering: "1.")
@@ -93,38 +83,41 @@
           author.name
         }
 
-        // Initialize an empty list to store indices of affiliations for this author
-        let affiliation_indices = ()
-
-        // Handle affiliations, ensuring compatibility with different formats
-        let affiliations = ()
-        if type(author.affiliations) == str {
-          affiliations.push(author.affiliations)
-        } else {
-          affiliations = author.affiliations
-        }
+        if "affiliations" in author.keys(){
         
-        // Loop through affiliations to determine unique indices
-        for affiliation in affiliations {
-          let affiliation_exists = false
-          for (j, aff) in affiliation_set.enumerate() {
-            if aff == affiliation {
-              affiliation_indices.push(j + 1)
-              affiliation_exists = true
-              break
+          // Initialize an empty list to store indices of affiliations for this author
+          let affiliation_indices = ()
+  
+          // Handle affiliations, ensuring compatibility with different formats
+          let affiliations = ()
+          if type(author.affiliations) == str {
+            affiliations.push(author.affiliations)
+          } else {
+            affiliations = author.affiliations
+          }
+          
+          // Loop through affiliations to determine unique indices
+          for affiliation in affiliations {
+            let affiliation_exists = false
+            for (j, aff) in affiliation_set.enumerate() {
+              if aff == affiliation {
+                affiliation_indices.push(j + 1)
+                affiliation_exists = true
+                break
+              }
+            }
+            if affiliation_exists == false {
+              affiliation_set.push(affiliation)
+              affiliation_indices.push(affiliation_set.len())
             }
           }
-          if affiliation_exists == false {
-            affiliation_set.push(affiliation)
-            affiliation_indices.push(affiliation_set.len())
-          }
-        }
-        
-        // Display the affiliation indices as superscripts
-        for (j, index) in affiliation_indices.enumerate() {
-          text(super(str(index)))
-          if j != affiliation_indices.len() - 1 {
-            text(super(","))
+          
+          // Display the affiliation indices as superscripts
+          for (j, index) in affiliation_indices.enumerate() {
+            text(super(str(index)))
+            if j != affiliation_indices.len() - 1 {
+              text(super(","))
+            }
           }
         }
 
@@ -136,8 +129,10 @@
         }
       }
 
-      linebreak()
-      linebreak()
+      if authors.len()>0{
+        linebreak()
+        linebreak()
+      }
       
       // Display the list of affiliations with their corresponding indices
       for (i, affiliation) in affiliation_set.enumerate() {
@@ -179,11 +174,23 @@
     )
  }
   
-  // Set paragraph justification for the document
-  set par(justify: true)
-  // Set equation numbering style
-  set math.equation(numbering: "(1)")
+
 
   // Include the main document content
   doc
+}
+
+// Define a macro for the abstract section, setting the text in bold
+#let Abstract(body) = {
+  set text(weight: "bold")
+  body
+}
+
+// Define a macro for the appendix section, adding specific heading numbering styles
+#let Appendix(body) = {
+  show: set heading(numbering: "A")
+  show heading.where(level: 2): set heading(numbering: "A1")
+  counter(heading).update(0)
+  [= Appendix]
+  body
 }
