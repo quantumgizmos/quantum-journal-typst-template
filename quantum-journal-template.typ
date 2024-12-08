@@ -24,7 +24,16 @@
   set page(
     margin: (top: 2.5cm, bottom: 3cm, left: 2cm, right: 2cm),
     columns: columns,
-    numbering: "1"
+    numbering: "1",
+    footer: {
+      rect(
+        width: 100%,
+        stroke: (top: 0.25pt),
+      )[
+        #set text(font: "New Computer Modern Sans", fill: quantum_violet)
+        Draft for Quantum #h(1fr) #text(size: 13pt, context counter(page).display())
+      ]
+    }
   )
 
   // Set paragraph justification for the document
