@@ -34,8 +34,15 @@
   set math.equation(numbering: "(1)")
 
   // Set the heading numbering and style
-  set heading(numbering: "1.")
-  show heading: text.with(font: "New Computer Modern Sans", weight: "regular", size: 1.0em)
+  set heading(numbering: (..nums) => nums.pos().map(str).join(".") )
+  show heading: set text(font: "New Computer Modern Sans", weight: "regular", size: 1.0em)
+  show heading: it => {
+    let number = if it.numbering != none {
+      counter(heading).display(it.numbering)
+      h(1em)
+    }
+    block(number + it.body, spacing: 1.2em)
+  }
   show heading.where(body: [Acknowledgements]): set heading(numbering: none)
 
   // Set the default text size and font, ensuring consistency
@@ -55,7 +62,8 @@
 
 
   // Style bibliography.
-  set std.bibliography(title: text(font-size)[= References], style: "ieee")
+  set std.bibliography(title: "References", style: "ieee")
+  show std.bibliography: set heading(numbering: none)
 
 
   // Place the title and author block at the top left of the page
