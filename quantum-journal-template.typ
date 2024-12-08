@@ -29,7 +29,7 @@
 
   // Set paragraph justification for the document
   set par(justify: true)
-  
+
   // Set equation numbering style
   set math.equation(numbering: "(1)")
 
@@ -47,17 +47,17 @@
   set text(size: font-size, font: font)
 
   //Figure formatting
- 
-  show figure.where(kind: image): set figure(supplement: [Fig], numbering: "1") 
+
+  show figure.where(kind: image): set figure(supplement: [Fig], numbering: "1")
   show figure.caption: set text(size: font-size)
   show figure.caption: set align(start)
-  
 
-  
+
+
   // Style bibliography.
   set std.bibliography(title: text(font-size)[= References], style: "ieee")
 
-  
+
   // Place the title and author block at the top left of the page
   place(
     top + left,
@@ -78,12 +78,12 @@
 
       linebreak()
       linebreak()
-    
+
       // Initialize an empty set to collect unique affiliations
       let affiliation_set = ()
       // Get the number of authors
       let author_count = authors.len()
-      
+
       // Loop over each author to display their information
       for (i, author) in authors.enumerate() {
         // Set the font for the author names
@@ -96,10 +96,10 @@
         }
 
         if "affiliations" in author.keys(){
-        
+
           // Initialize an empty list to store indices of affiliations for this author
           let affiliation_indices = ()
-  
+
           // Handle affiliations, ensuring compatibility with different formats
           let affiliations = ()
           if type(author.affiliations) == str {
@@ -107,7 +107,7 @@
           } else {
             affiliations = author.affiliations
           }
-          
+
           // Loop through affiliations to determine unique indices
           for affiliation in affiliations {
             let affiliation_exists = false
@@ -123,7 +123,7 @@
               affiliation_indices.push(affiliation_set.len())
             }
           }
-          
+
           // Display the affiliation indices as superscripts
           for (j, index) in affiliation_indices.enumerate() {
             text(super(str(index)))
@@ -145,7 +145,7 @@
         linebreak()
         linebreak()
       }
-      
+
       // Display the list of affiliations with their corresponding indices
       for (i, affiliation) in affiliation_set.enumerate() {
         set text(size: 0.9em, font: "New Computer Modern Sans", fill: quantum_grey)
@@ -185,7 +185,7 @@
       }
     )
  }
-  
+
 
 
   // Include the main document content
