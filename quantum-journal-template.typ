@@ -31,7 +31,7 @@
         stroke: (top: 0.25pt),
       )[
         #set text(font: "New Computer Modern Sans", fill: quantum-violet)
-        Draft for Quantum #h(1fr) #text(size: 13pt, context counter(page).display())
+        Draft for Quantum #h(1fr) #text(size: font-size, context counter(page).display())
       ]
     }
   )
@@ -62,6 +62,15 @@
   }
   set text(size: font-size, font: font)
 
+  // Color setup.
+  show link: set text(fill: quantum-violet)
+  show footnote: set text(fill: quantum-violet)
+  show ref: it => {
+    show regex("\d+(\.?\p{L}*)?"): set text(fill: color.quantum-violet)
+    it
+  }
+
+  
   //Figure formatting
 
   show figure.where(kind: image): set figure(supplement: [Fig], numbering: "1")
@@ -110,10 +119,10 @@
       // Loop over each author to display their information
       for (i, author) in authors.enumerate() {
         // Set the font for the author names
-        set text(font: "New Computer Modern Sans", size: 1.3em)
+        set text(font: "New Computer Modern Sans", size: 1.2em)
         // Display the author's name with or without a link to their homepage
         if "homepage" in author.keys() {
-          link(author.homepage)[#author.name]
+          link(author.homepage)[#text(fill:black,author.name)]
         } else {
           author.name
         }

@@ -1,3 +1,4 @@
+#import "@preview/cetz:0.3.0"
 #import "quantum-journal-template.typ": *
 #show: quantum-journal-template.with(
 
@@ -35,7 +36,7 @@
 )
 
 #Abstract[
-  This is a first attempt at a Typst template for Quantum Journal. Efforts have been made to replicate the look and feel of the existing LaTeX template. The current version includes basic functionality, but various features, e.g., citation formatting, still need to be developed.
+  This is a first attempt at a Typst template for Quantum Journal. Efforts have been made to replicate the look and feel of the existing LaTeX template. The current version includes basic functionality and many features still need to be added.
 ]
 
 = Introduction
@@ -53,15 +54,26 @@ Note, `braket` notation is enabled through the `physica` extension which is impo
 
 = Citations
 
-Typst supports the `.bib` citation format. For example, here is a citation for the Numpy paper #cite(<Harris_2020>). Currently, this template uses the IEEE citation style file.
+Typst supports the `.bib` citation format. For example, here is a citation for the Numpy paper #cite(<Harris_2020>). ArXiv preprints can also be cite #cite(<gottesman2009introductionquantumerrorcorrection>). Currently, this template uses the IEEE citation style file.
 
 = Figures
 
 The `#figure` command can be used to insert images into the document.
 
 #figure(
-  image("quantum_journal_logo.png",width: 100%),
-  caption: [The Quantum-Journal logo]
+  cetz.canvas(length: 1in, {
+  import cetz.draw: *
+
+    circle((0, 0), name: "circle", radius: 1)
+    set-style(content: (frame: "rect", stroke: none, fill: white, padding: .1))
+    content((name: "circle", anchor: 0deg), [0deg], anchor: "west")
+    content((name: "circle", anchor: 160deg), [160deg], anchor: "south-east")
+    content("circle.north", [North], anchor: "south")
+    content("circle.south-east", [South East], anchor: "north-west")
+    content("circle.south-west", [South West], anchor: "north-east")
+  
+}),
+  caption: [A circle with some labels. This figure is generated using `cetz` which is Typst's replacement for `tikz`.]
 )
 
 = Acknowledgements
