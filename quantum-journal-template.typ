@@ -2,8 +2,8 @@
 #import "@preview/physica:0.9.3": *
 
 // Define custom colors for use in the template
-#let quantum_violet = rgb("#53257F")
-#let quantum_grey = rgb("#555555")
+#let quantum-violet = rgb("#53257F")
+#let quantum-grey = rgb("#555555")
 
 // Define the main template function 'quantum-journal-template'
 #let quantum-journal-template(
@@ -12,7 +12,7 @@
     font-size: 11pt,                // Default font size
     columns: 2,                     // Number of columns in the document
     font: "New Computer Modern",    // Default font
-    title_url: none, // The link when you click on the title
+    title-url: none, // The link when you click on the title
     bibliography: bibliography("refs.bib"),
     doc                             // Document content
 ) = {
@@ -30,7 +30,7 @@
         width: 100%,
         stroke: (top: 0.25pt),
       )[
-        #set text(font: "New Computer Modern Sans", fill: quantum_violet)
+        #set text(font: "New Computer Modern Sans", fill: quantum-violet)
         Draft for Quantum #h(1fr) #text(size: 13pt, context counter(page).display())
       ]
     }
@@ -83,13 +83,13 @@
     {
       // Display the title in a larger font with a custom color and font
       {
-        set text(size: 2em, fill: quantum_violet, font: "New Computer Modern Sans")
+        set text(size: 2em, fill: quantum-violet, font: "New Computer Modern Sans")
 
-        if title_url == none{
+        if title-url == none{
           title
         }
         else{
-          link(title_url)[#title]
+          link(title-url)[#title]
         }
       }
 
@@ -97,9 +97,9 @@
       linebreak()
 
       // Initialize an empty set to collect unique affiliations
-      let affiliation_set = ()
+      let affiliation-set = ()
       // Get the number of authors
-      let author_count = authors.len()
+      let author-count = authors.len()
 
       // Loop over each author to display their information
       for (i, author) in authors.enumerate() {
@@ -115,7 +115,7 @@
         if "affiliations" in author.keys(){
 
           // Initialize an empty list to store indices of affiliations for this author
-          let affiliation_indices = ()
+          let affiliation-indices = ()
 
           // Handle affiliations, ensuring compatibility with different formats
           let affiliations = ()
@@ -127,33 +127,33 @@
 
           // Loop through affiliations to determine unique indices
           for affiliation in affiliations {
-            let affiliation_exists = false
-            for (j, aff) in affiliation_set.enumerate() {
+            let affiliation-exists = false
+            for (j, aff) in affiliation-set.enumerate() {
               if aff == affiliation {
-                affiliation_indices.push(j + 1)
-                affiliation_exists = true
+                affiliation-indices.push(j + 1)
+                affiliation-exists = true
                 break
               }
             }
-            if affiliation_exists == false {
-              affiliation_set.push(affiliation)
-              affiliation_indices.push(affiliation_set.len())
+            if affiliation-exists == false {
+              affiliation-set.push(affiliation)
+              affiliation-indices.push(affiliation-set.len())
             }
           }
 
           // Display the affiliation indices as superscripts
-          for (j, index) in affiliation_indices.enumerate() {
+          for (j, index) in affiliation-indices.enumerate() {
             text(super(str(index)))
-            if j != affiliation_indices.len() - 1 {
+            if j != affiliation-indices.len() - 1 {
               text(super(","))
             }
           }
         }
 
         // Add appropriate punctuation between author names
-        if i < author_count - 2 {
+        if i < author-count - 2 {
           text(", ")
-        } else if i == author_count - 2 {
+        } else if i == author-count - 2 {
           text(" and ")
         }
       }
@@ -164,8 +164,8 @@
       }
 
       // Display the list of affiliations with their corresponding indices
-      for (i, affiliation) in affiliation_set.enumerate() {
-        set text(size: 0.9em, font: "New Computer Modern Sans", fill: quantum_grey)
+      for (i, affiliation) in affiliation-set.enumerate() {
+        set text(size: 0.9em, font: "New Computer Modern Sans", fill: quantum-grey)
         text(super(str(i + 1)))
         affiliation
         linebreak()
@@ -175,15 +175,15 @@
   )
 
   // Display emails at the bottom left of the page
-  let emails_exist = false
+  let emails-exist = false
   for author in authors{
     if "email" in author.keys(){
-      emails_exist = true
+      emails-exist = true
       break
     }
   }
 
-  if emails_exist{
+  if emails-exist{
     place(
       bottom + left,
       scope: "column",
@@ -191,7 +191,7 @@
         show link: underline
         set text(size: 0.8em, font: "New Computer Modern Sans")
         text(weight: "bold")[Contact]
-        set text(fill: quantum_grey)
+        set text(fill: quantum-grey)
         linebreak()
         for author in authors {
           if ("email" in author.keys()) {
