@@ -1,8 +1,8 @@
 #import "quantum-journal-template.typ": *
 #show: quantum-journal-template.with(
-  
+
   title: "Typst Template for Quantum Journal",
-  
+
   authors: (
 
     (
@@ -24,23 +24,24 @@
     affiliations: "University Three",
     homepage: "https://en.wikipedia.org/wiki/three"
     ),
-    
+
   ),
-  
+
   font-size: 11pt, // choose the font
   columns: 2, //set the number of columns
   font: "serif", //choose between 'serif' or 'sans' or any typst.app font.
   title_url: "https://typst.app" //this the link when you click on the title
-  
+
 )
 
 #Abstract[
-  This is a first attempt at a Typst template for Quantum Journal. Efforts have been made to replicate the look and feel of the existing LaTeX template. The current version includes basic functionality, but various features, e.g., citation formatting, still need to be developed. 
+  This is a first attempt at a Typst template for Quantum Journal. Efforts have been made to replicate the look and feel of the existing LaTeX template. The current version includes basic functionality, but various features, e.g., citation formatting, still need to be developed.
 ]
 
 = Introduction
+== Introduction
 
-Typst is a modern document preparation system that serves as an alternative to LaTeX. Written from the ground up in Rust, it offers faster compilation times and a more intuitive markup language, making it straightforward to create custom layouts and extensions. The developers are currently working on HTML export, which will  improve the accessibility of academic literature. 
+Typst is a modern document preparation system that serves as an alternative to LaTeX. Written from the ground up in Rust, it offers faster compilation times and a more intuitive markup language, making it straightforward to create custom layouts and extensions. The developers are currently working on HTML export, which will  improve the accessibility of academic literature.
 
 = Equations
 
@@ -74,6 +75,5 @@ The `#figure` command can be used to insert images into the document.
 
   == Sub-appendix
   #lorem(20)
-  
-]
 
+]
