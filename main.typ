@@ -30,7 +30,7 @@
   font-size: 11pt, // choose the font
   columns: 2, //set the number of columns
   font: "serif", //choose between 'serif' or 'sans' or any typst.app font.
-  title_url: "https://typst.app" //this the link when you click on the title
+  title-url: "https://typst.app" //this the link when you click on the title
 
 )
 
