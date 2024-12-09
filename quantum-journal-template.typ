@@ -68,6 +68,12 @@
   show figure.caption: set text(size: font-size)
   show figure.caption: set align(start)
 
+  // Figure setup.
+  set figure(gap: 1em)
+  show figure.caption: set text(font: "New Computer Modern Sans", size: 0.9em)
+  show figure.caption: set par(leading: 0.5em)
+  show figure.caption: set align(start)
+
 
 
   // Style bibliography.
