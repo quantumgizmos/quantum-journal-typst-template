@@ -120,44 +120,38 @@
       for (i, author) in authors.enumerate() {
         // Set the font for the author names
         set text(font: "New Computer Modern Sans", size: 1.2em)
-        // Display the author's name with or without a link to their homepage
-        if "homepage" in author.keys() {
-          link(author.homepage)[#text(fill:black,author.name)]
+        // Display the author's name with or without a link to their ORCID
+        if "orcid" in author.keys() {
+          link("https://orcid.org/" + author.orcid)[#text(fill:black,author.name)]
         } else {
           author.name
         }
 
         if "affiliations" in author.keys(){
 
+          // Handle affiliations, ensuring compatibility with different formats
+          let affiliations = if type(author.affiliations) == str {
+            (author.affiliations,)
+          } else {
+            author.affiliations
+          }
+
           // Initialize an empty list to store indices of affiliations for this author
           let affiliation-indices = ()
 
-          // Handle affiliations, ensuring compatibility with different formats
-          let affiliations = ()
-          if type(author.affiliations) == str {
-            affiliations.push(author.affiliations)
-          } else {
-            affiliations = author.affiliations
-          }
-
           // Loop through affiliations to determine unique indices
           for affiliation in affiliations {
-            let affiliation-exists = false
-            for (j, aff) in affiliation-set.enumerate() {
-              if aff == affiliation {
-                affiliation-indices.push(j + 1)
-                affiliation-exists = true
-                break
-              }
-            }
-            if affiliation-exists == false {
+            let index = affiliation-set.position(a => a == affiliation)
+            if index != none {
+              affiliation-indices.push(index + 1)
+            } else {
               affiliation-set.push(affiliation)
               affiliation-indices.push(affiliation-set.len())
             }
           }
 
           // Display the affiliation indices as superscripts
-          for (j, index) in affiliation-indices.enumerate() {
+          for (j, index) in affiliation-indices.sorted().enumerate() {
             text(super(str(index)))
             if j != affiliation-indices.len() - 1 {
               text(super(","))
@@ -189,34 +183,43 @@
     }
   )
 
-  // Display emails at the bottom left of the page
-  let emails-exist = false
-  for author in authors{
-    if "email" in author.keys(){
-      emails-exist = true
-      break
-    }
-  }
+  // Display homepage, emails and thanks at the bottom left of the page
+  let has-bottom-display-info = author => ("email", "homepage", "thanks").any(key => key in author.keys())
 
-  if emails-exist{
+  if authors.any(has-bottom-display-info) {
     place(
       bottom + left,
       scope: "column",
       float: true, {
-        show link: underline
-        set text(size: 0.8em, font: "New Computer Modern Sans")
-        text(weight: "bold")[Contact]
-        set text(fill: quantum-grey)
-        linebreak()
         for author in authors {
-          if ("email" in author.keys()) {
-            [#author.name: #link("mailto:" + author.email)]
-            linebreak()
+          if not has-bottom-display-info(author) {
+            continue
           }
+          set text(size: 0.8em, font: "New Computer Modern Sans")
+          set text(fill: quantum-grey)
+          [#author.name: ]
+          if "email" in author.keys() {
+            [#link("mailto:" + author.email)]
+          }
+          if "homepage" in author.keys() {
+            if "email" in author.keys() {
+              [, ]
+            }
+            [#link(author.homepage)]
+          }
+          if "thanks" in author.keys() {
+            if "email" in author.keys() or "homepage" in author.keys() {
+              [, ]
+            }
+            [#author.thanks]
+          }
+          linebreak()
         }
       }
     )
  }
+
+ 
 
 
 
