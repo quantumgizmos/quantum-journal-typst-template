@@ -38,6 +38,7 @@
 
   // Set paragraph justification for the document
   set par(justify: true)
+  set par(leading: 0.55em, spacing: 0.7em)
 
   // Set equation numbering style
   set math.equation(numbering: "(1)")
