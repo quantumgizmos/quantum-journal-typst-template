@@ -10,20 +10,24 @@
     name: "Author One",
     affiliations: ("Univeristy One"),
     email: "author@one.edu",
-    homepage: "https://en.wikipedia.org/wiki/one"
+    homepage: "https://wikipedia.org/wiki/one",
+    orcid: "0000-0000-0000-0001"
     ),
 
     (
     name: "Author Two",
     affiliations: ("University Two", "Univeristy One"),
     email: "author@two.edu",
-    homepage: "https://en.wikipedia.org/wiki/two",
+    homepage: "https://wikipedia.org/wiki/two",
+    thanks: [A.O. would like to thank the family of real numbers who have supported them throughout every stage of their career.],
+    orcid: "0000-0000-0000-0002"
     ),
 
     (
     name: "Author Three",
     affiliations: "University Three",
-    homepage: "https://en.wikipedia.org/wiki/three"
+    homepage: "https://wikipedia.org/wiki/three",
+    orcid: "0000-0000-0000-0003"
     ),
 
   ),
@@ -31,7 +35,7 @@
   font-size: 11pt, // choose the font
   columns: 2, //set the number of columns
   font: "serif", //choose between 'serif' or 'sans' or any typst.app font.
-  title-url: "https://typst.app" //this the link when you click on the title
+  title-url: "https://github.com/quantumgizmos/quantum-journal-typst-template" //this the link when you click on the title
 
 )
 
@@ -54,7 +58,7 @@ Note, `braket` notation is enabled through the `physica` extension which is impo
 
 = Citations
 
-Typst supports the `.bib` citation format. For example, here is a citation for the Numpy paper #cite(<Harris_2020>). ArXiv preprints can also be cite #cite(<gottesman2009introductionquantumerrorcorrection>). Currently, this template uses the IEEE citation style file.
+Typst supports the `.bib` citation format. For example, here is a citation for the Numpy paper #cite(<Harris_2020>). ArXiv preprints can also be cited #cite(<gottesman2009introductionquantumerrorcorrection>). Currently, this template uses the IEEE citation style file.
 
 = Figures
 

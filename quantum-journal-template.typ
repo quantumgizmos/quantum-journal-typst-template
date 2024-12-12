@@ -72,13 +72,12 @@
 
   
   //Figure formatting
-
   show figure.where(kind: image): set figure(supplement: [Fig], numbering: "1")
   show figure.caption: set text(size: font-size)
   show figure.caption: set align(start)
 
   // Figure setup.
-  set figure(gap: 1em)
+  set figure(gap: 2em)
   show figure.caption: set text(font: "New Computer Modern Sans", size: 0.9em)
   show figure.caption: set par(leading: 0.5em)
   show figure.caption: set align(start)
@@ -109,7 +108,7 @@
       }
 
       linebreak()
-      linebreak()
+      v(1em)
 
       // Initialize an empty set to collect unique affiliations
       let affiliation-set = ()
@@ -119,7 +118,7 @@
       // Loop over each author to display their information
       for (i, author) in authors.enumerate() {
         // Set the font for the author names
-        set text(font: "New Computer Modern Sans", size: 1.2em)
+        set text(font: "New Computer Modern Sans", size: 1.1em)
         // Display the author's name with or without a link to their ORCID
         if "orcid" in author.keys() {
           link("https://orcid.org/" + author.orcid)[#text(fill:black,author.name)]
@@ -151,7 +150,7 @@
           }
 
           // Display the affiliation indices as superscripts
-          for (j, index) in affiliation-indices.sorted().enumerate() {
+          for (j, index) in affiliation-indices.enumerate() {
             text(super(str(index)))
             if j != affiliation-indices.len() - 1 {
               text(super(","))
@@ -169,17 +168,17 @@
 
       if authors.len()>0{
         linebreak()
-        linebreak()
+        v(1em)
       }
 
       // Display the list of affiliations with their corresponding indices
       for (i, affiliation) in affiliation-set.enumerate() {
-        set text(size: 0.9em, font: "New Computer Modern Sans", fill: quantum-grey)
+        set text(size: 0.8em, font: "New Computer Modern Sans", fill: quantum-grey)
         text(super(str(i + 1)))
         affiliation
         linebreak()
       }
-      linebreak()
+      v(1em)
     }
   )
 
@@ -191,12 +190,13 @@
       bottom + left,
       scope: "column",
       float: true, {
+        set par(leading: 0.5em)
         for author in authors {
           if not has-bottom-display-info(author) {
             continue
           }
           set text(size: 0.8em, font: "New Computer Modern Sans")
-          set text(fill: quantum-grey)
+          
           [#author.name: ]
           if "email" in author.keys() {
             [#link("mailto:" + author.email)]
