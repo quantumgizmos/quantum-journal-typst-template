@@ -1,5 +1,8 @@
-// Importing required packages
+// For bra ket notation
 #import "@preview/physica:0.9.3": *
+
+// For quantum circuit diagrams
+#import "@preview/quill:0.5.0" as quill: tequila as tq
 
 // Define custom colors for use in the template
 #let quantum-violet = rgb("#53257F")
@@ -174,7 +177,7 @@
 
       // Display the list of affiliations with their corresponding indices
       for (i, affiliation) in affiliation-set.enumerate() {
-        set text(size: 0.8em, font: "New Computer Modern Sans", fill: quantum-grey)
+        set text(size: 0.8em, font: "New Computer Modern Sans", fill: quantum-grey,weight: "regular")
         text(super(str(i + 1)))
         affiliation
         linebreak()

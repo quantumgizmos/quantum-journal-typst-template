@@ -80,6 +80,28 @@ The `#figure` command can be used to insert images into the document.
   caption: [A circle with some labels. This figure is generated using `cetz` which is Typst's replacement for `tikz`.]
 )
 
+= Quantum Circuit Diagrams
+
+Quantum circuit diagrams can be included using the `Quill` package.
+
+#figure(
+quill.quantum-circuit(
+  
+  quill.lstick($ket(0)$), [\ ],
+  quill.lstick($ket(0)$), [\ ],
+  quill.lstick($ket(0)$),
+  ..tq.build(
+    tq.h(0),
+    tq.cx(0, 1),
+    tq.cx(0, 2),
+  ),
+  
+),
+
+caption: [The `Quill` package can be used to draw quantum circuit diagrams. ]
+
+)
+
 = Acknowledgements
 #lorem(25)
 
